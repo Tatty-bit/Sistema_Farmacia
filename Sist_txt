@@ -1,0 +1,8 @@
+Estudando e codando nas Fériasss...
+
+Esse é um pequeno protótipo de um Sistema de Farmácia, desenvolvido com a linguagem Python utilizando 
+a interface Tkinter e SqLite como um "litle" database.
+/Gestão de Controle de Estoque de medicamentos:
+ (Segue com simulação de Banco de dados com uma tabela possuindo 20 tipos de medicamentos),
+onde permite  que o usuário faça alterações como; Cadastrar e Listar medicamentos, Editar e Excluir.
+Tambem emite alerta quando houver a falta de medicamentos em Estoque.

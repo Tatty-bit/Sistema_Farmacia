@@ -1,0 +1,144 @@
+[
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "tkinter",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "simpledialog",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "cadastrar_medicamento",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def cadastrar_medicamento():\n    nome = entry_nome.get().strip()\n    try:\n        qtd = int(entry_qtd.get())\n        cursor.execute(\"INSERT INTO medicamentos (nome, quantidade) VALUES (?, ?)\", (nome, qtd))\n        conn.commit()\n        messagebox.showinfo(\"Sucesso\", \"Medicamento cadastrado com sucesso!\")\n        entry_nome.delete(0, tk.END)\n        entry_qtd.delete(0, tk.END)\n        listar_medicamentos()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "listar_medicamentos",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def listar_medicamentos():\n    lista.delete(0, tk.END)\n    cursor.execute(\"SELECT * FROM medicamentos\")\n    for med in cursor.fetchall():\n        lista.insert(tk.END, f\"ID: {med[0]} | Nome: {med[1]} | Quantidade: {med[2]}\")\ndef alerta_medicamentos():\n    cursor.execute(\"SELECT nome FROM medicamentos WHERE quantidade <= 0\")\n    em_falta = cursor.fetchall()\n    if em_falta:\n        alerta = \"\\n\".join([f\"❌ {m[0]}\" for m in em_falta])",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "alerta_medicamentos",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def alerta_medicamentos():\n    cursor.execute(\"SELECT nome FROM medicamentos WHERE quantidade <= 0\")\n    em_falta = cursor.fetchall()\n    if em_falta:\n        alerta = \"\\n\".join([f\"❌ {m[0]}\" for m in em_falta])\n        messagebox.showwarning(\"Alerta de falta\", alerta)\n    else:\n        messagebox.showinfo(\"Estoque\", \"Todos os medicamentos estão disponíveis.\")\ndef buscar_medicamento():\n    nome = simpledialog.askstring(\"Buscar\", \"Digite o nome do medicamento:\")",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "buscar_medicamento",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def buscar_medicamento():\n    nome = simpledialog.askstring(\"Buscar\", \"Digite o nome do medicamento:\")\n    if nome:\n        lista.delete(0, tk.END)\n        cursor.execute(\"SELECT * FROM medicamentos WHERE nome LIKE ?\", ('%' + nome + '%',))\n        resultados = cursor.fetchall()\n        if resultados:\n            for med in resultados:\n                lista.insert(tk.END, f\"ID: {med[0]} | Nome: {med[1]} | Quantidade: {med[2]}\")\n        else:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "editar_medicamento",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def editar_medicamento():\n    try:\n        id_editar = int(simpledialog.askstring(\"Editar\", \"Digite o ID do medicamento:\"))\n        cursor.execute(\"SELECT * FROM medicamentos WHERE id = ?\", (id_editar,))\n        med = cursor.fetchone()\n        if med:\n            novo_nome = simpledialog.askstring(\"Novo Nome\", f\"Nome atual: {med[1]}\")\n            nova_qtd = simpledialog.askinteger(\"Nova Quantidade\", f\"Quantidade atual: {med[2]}\")\n            if novo_nome and nova_qtd is not None:\n                cursor.execute(\"UPDATE medicamentos SET nome = ?, quantidade = ? WHERE id = ?\", (novo_nome, nova_qtd, id_editar))",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "excluir_medicamento",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def excluir_medicamento():\n    try:\n        id_excluir = int(simpledialog.askstring(\"Excluir\", \"Digite o ID do medicamento:\"))\n        cursor.execute(\"SELECT * FROM medicamentos WHERE id = ?\", (id_excluir,))\n        med = cursor.fetchone()\n        if med:\n            confirm = messagebox.askyesno(\"Confirmação\", f\"Deseja excluir '{med[1]}'?\")\n            if confirm:\n                cursor.execute(\"DELETE FROM medicamentos WHERE id = ?\", (id_excluir,))\n                conn.commit()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "conn",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "conn = sqlite3.connect(\"farmacia.db\")\ncursor = conn.cursor()\ncursor.execute(\"\"\"\nCREATE TABLE IF NOT EXISTS medicamentos (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    nome TEXT NOT NULL,\n    quantidade INTEGER NOT NULL\n)\n\"\"\")\nconn.commit()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "cursor",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "cursor = conn.cursor()\ncursor.execute(\"\"\"\nCREATE TABLE IF NOT EXISTS medicamentos (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    nome TEXT NOT NULL,\n    quantidade INTEGER NOT NULL\n)\n\"\"\")\nconn.commit()\n# Funções do sistema",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "janela",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "janela = tk.Tk()\njanela.title(\"Sistema de Medicamentos\")\njanela.geometry(\"600x400\")\n# Entradas\ntk.Label(janela, text=\"Nome do Medicamento\").pack()\nentry_nome = tk.Entry(janela, width=40)\nentry_nome.pack()\ntk.Label(janela, text=\"Quantidade em Estoque\").pack()\nentry_qtd = tk.Entry(janela, width=10)\nentry_qtd.pack()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "entry_nome",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "entry_nome = tk.Entry(janela, width=40)\nentry_nome.pack()\ntk.Label(janela, text=\"Quantidade em Estoque\").pack()\nentry_qtd = tk.Entry(janela, width=10)\nentry_qtd.pack()\ntk.Button(janela, text=\"Cadastrar\", command=cadastrar_medicamento, bg=\"#4CAF50\", fg=\"white\").pack(pady=5)\ntk.Button(janela, text=\"Listar Medicamentos\", command=listar_medicamentos).pack()\ntk.Button(janela, text=\"Verificar Alerta\", command=alerta_medicamentos).pack()\ntk.Button(janela, text=\"Buscar por Nome\", command=buscar_medicamento).pack()\ntk.Button(janela, text=\"Editar Medicamento\", command=editar_medicamento).pack()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "entry_qtd",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "entry_qtd = tk.Entry(janela, width=10)\nentry_qtd.pack()\ntk.Button(janela, text=\"Cadastrar\", command=cadastrar_medicamento, bg=\"#4CAF50\", fg=\"white\").pack(pady=5)\ntk.Button(janela, text=\"Listar Medicamentos\", command=listar_medicamentos).pack()\ntk.Button(janela, text=\"Verificar Alerta\", command=alerta_medicamentos).pack()\ntk.Button(janela, text=\"Buscar por Nome\", command=buscar_medicamento).pack()\ntk.Button(janela, text=\"Editar Medicamento\", command=editar_medicamento).pack()\ntk.Button(janela, text=\"Excluir Medicamento\", command=excluir_medicamento).pack()\n# Lista\nlista = tk.Listbox(janela, width=80, height=10)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "lista",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "lista = tk.Listbox(janela, width=80, height=10)\nlista.pack(pady=10)\nlistar_medicamentos()  # Carrega ao abrir\njanela.mainloop()\nconn.close()",
+        "detail": "main",
+        "documentation": {}
+    }
+]
