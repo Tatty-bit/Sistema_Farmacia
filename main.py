@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS medicamentos (
 """)
 conn.commit()
 
-# Funções do sistema
+
 def cadastrar_medicamento():
     nome = entry_nome.get().strip()
     try:
@@ -94,15 +94,14 @@ def excluir_medicamento():
     except:
         messagebox.showerror("Erro", "ID inválido.")
 
-# Interface com Tkinter
 janela = tk.Tk()
 janela.title("Sistema de Medicamentos")
 janela.geometry("800x600")
-janela.configure(bg="#e3f2fd")  # azul claro
-# Definindo fonte padrão para a interface
+janela.configure(bg="#e3f2fd")  
+
 fonte_padrao = ("bold", 12)
 janela.option_add("*Font", fonte_padrao)
-# Entradas
+
 tk.Label(janela, text="Nome do Medicamento").pack(pady=15)
 entry_nome = tk.Entry(janela, width=40)
 entry_nome.pack(pady=15)
@@ -113,7 +112,6 @@ entry_qtd = tk.Entry(janela, width=40)
 entry_qtd.pack(pady=15)
 button_width = 25
 
-# Função para mostrar messagebox de saída maior
 def show_large_messagebox(title, message):
     top = tk.Toplevel(janela)
     top.title(title)
@@ -128,23 +126,22 @@ tk.Button(janela, text="Buscar por Nome", command=buscar_medicamento, bg="#0C253
 tk.Button(janela, text="Editar Medicamento", command=editar_medicamento, bg="#0C253F", fg="white").pack(pady=10)
 tk.Button(janela, text="Excluir Medicamento", command=excluir_medicamento, bg="#0C253F", fg="white").pack(pady=10)
 
-# Lista
 lista = tk.Listbox(janela, width=100, height=50, bg="#f9fcfd", fg="#333", font=("Arial", 10, "bold"), selectbackground="#dfe6e9", selectforeground="#2d3436")
 
 lista.pack(pady=15)
-# Carregar e exibir uma pequena imagem (ex: logo)
+
 try:
-    img = Image.open("logo.png")  # Coloque um arquivo logo.png na mesma pasta
+    img = Image.open("logo.png") 
     img = img.resize((80, 80), Image.LANCZOS)
     img_tk = ImageTk.PhotoImage(img)
     label_img = tk.Label(janela, image=img_tk, bg="#f5f6fa")
     label_img.pack(pady=5)
 except Exception as e:
-    pass  # Se não encontrar a imagem, apenas ignora
-listar_medicamentos()  # Carrega ao abrir
+    pass 
+listar_medicamentos() 
 janela.mainloop()
 conn.close()
-# Aplicando tema claro e melhorias visuais
+
 def aplicar_tema_claro(widget):
     widget.configure(bg="#f5f6fa")
     for child in widget.winfo_children():
@@ -163,7 +160,7 @@ def aplicar_tema_claro(widget):
 
 aplicar_tema_claro(janela)
 
-# Tornar interface responsiva
+
 def on_resize(event):
     largura = event.width
     if largura < 500:
